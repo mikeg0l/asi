@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+.venv
+
+# Środowisko
+.env
+*.egg-info/
+
+# Dane i modele
+data/
+*.db
+*.pkl
+AutogluonModels/
+
+# W&B
+wandb/
+
+# IDE
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
