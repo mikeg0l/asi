@@ -1,0 +1,38 @@
+raw_data:
+  type: pandas.SQLTableDataset
+  credentials: db_credentials
+  table_name: water_potability
+  save_args:
+    if_exists: replace
+
+X_train:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/X_train.pkl
+
+X_val:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/X_val.pkl
+
+X_test:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/X_test.pkl
+
+y_train:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/y_train.pkl
+
+y_val:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/y_val.pkl
+
+y_test:
+  type: pickle.PickleDataset
+  filepath: data/05_model_input/y_test.pkl
+
+trained_model:
+  type: pickle.PickleDataset
+  filepath: data/06_models/baseline_model.pkl
+
+metrics:
+  type: json.JSONDataset
+  filepath: data/08_reporting/metrics.json

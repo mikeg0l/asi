@@ -7,6 +7,7 @@ __pycache__/
 
 # Środowisko
 .env
+conf/local/
 *.egg-info/
 
 # Dane i modele
@@ -21,6 +22,10 @@ wandb/
 # IDE
 .vscode/
 .idea/
+
+# Kedro
+.viz/
+.telemetry
 
 # macOS
 .DS_Store
