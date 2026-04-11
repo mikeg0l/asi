@@ -19,8 +19,18 @@ from sklearn.utils import resample, shuffle
 logger = logging.getLogger(__name__)
 
 
-def preprocess(data: pd.DataFrame, parameters: Dict[str, Any],) -> pd.DataFrame:
+def preprocess(data: pd.DataFrame, parameters: Dict[str, Any]) -> pd.DataFrame:
+    """Balansuje zbiór danych poprzez oversampling mniejszościowej klasy.
 
+    Args:
+        data: Surowy DataFrame z danymi.
+        parameters: Słownik zawierający:
+            - target_column: nazwa kolumny docelowej
+            - split.random_state: ziarno losowości
+
+    Returns:
+        DataFrame z zbalansowanym rozkładem klas.
+    """
     target = parameters["target_column"]
 
     logger.info("Dane surowe: %d wierszy, rozkład klas:\n%s",
@@ -46,7 +56,19 @@ def preprocess(data: pd.DataFrame, parameters: Dict[str, Any],) -> pd.DataFrame:
 
 
 def split_data(data: pd.DataFrame, parameters: Dict[str, Any]):
+    """Dzieli dane na zbiory treningowy, walidacyjny i testowy.
 
+    Args:
+        data: DataFrame z danymi (po balansowaniu).
+        parameters: Słownik zawierający:
+            - target_column: nazwa kolumny docelowej
+            - split.test_size: frakcja danych na test (np. 0.2)
+            - split.val_ratio: frakcja danych testowych na walidację
+            - split.random_state: ziarno losowości
+
+    Returns:
+        Tuple: (X_train, X_val, X_test, y_train, y_val, y_test)
+    """
     target = parameters["target_column"]
     split_params = parameters["split"]
 
@@ -72,7 +94,21 @@ def split_data(data: pd.DataFrame, parameters: Dict[str, Any]):
 
 
 def train_model(X_train: pd.DataFrame, y_train: pd.Series, parameters: Dict[str, Any]) -> Pipeline:
+    """Trenuje pipeline klasyfikatora RandomForest z imputacją i skalowaniem.
 
+    Args:
+        X_train: Cecha zbioru treningowego.
+        y_train: Etykiety zbioru treningowego.
+        parameters: Słownik zawierający:
+            - model.n_estimators: liczba drzew
+            - model.random_state: ziarno losowości
+            - model.class_weight: wagi klas
+            - model.n_jobs: liczba rdzeni
+            - imputer.strategy: strategia imputacji (np. 'mean')
+
+    Returns:
+        Wytrenowany Pipeline z imputerem, skalierem i klasyfikatorem.
+    """
     model_params = parameters["model"]
     imputer_params = parameters["imputer"]
 
@@ -103,6 +139,16 @@ def train_model(X_train: pd.DataFrame, y_train: pd.Series, parameters: Dict[str,
 
 
 def evaluate_model(model: Pipeline, X_val: pd.DataFrame, y_val: pd.Series) -> Dict[str, float]:
+    """Oblicza metryki klasyfikacji na zbiorze walidacyjnym.
+
+    Args:
+        model: Wytrenowany pipeline.
+        X_val: Cecha zbioru walidacyjnego.
+        y_val: Etykiety zbioru walidacyjnego.
+
+    Returns:
+        Słownik z metrykami: accuracy, precision, rmse, mae, r2.
+    """
     y_pred = model.predict(X_val)
     y_pred_proba = model.predict_proba(X_val)[:, 1]
 

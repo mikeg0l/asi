@@ -5,4 +5,8 @@ cp .env.example .env
 conda create -n asi python=3.10 -y
 conda activate asi
 pip install -r requirements.txt
+
+cp -r conf/base conf/local
 ```
+
+potem dodać credentials do conf/local/credentials.yaml
