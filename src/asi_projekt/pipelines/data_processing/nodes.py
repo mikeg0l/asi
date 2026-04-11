@@ -1,4 +1,6 @@
 import logging
+import wandb
+from dotenv import load_dotenv
 from typing import Any, Dict, Tuple
 
 import pandas as pd
@@ -17,6 +19,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.utils import resample, shuffle
 
 logger = logging.getLogger(__name__)
+
+load_dotenv()
 
 
 def preprocess(data: pd.DataFrame, parameters: Dict[str, Any]) -> pd.DataFrame:
@@ -47,7 +51,8 @@ def preprocess(data: pd.DataFrame, parameters: Dict[str, Any]) -> pd.DataFrame:
     )
 
     data_balanced = pd.concat([majority, minority_upsampled])
-    data_balanced = shuffle(data_balanced, random_state=parameters["split"]["random_state"])
+    data_balanced = shuffle(
+        data_balanced, random_state=parameters["split"]["random_state"])
 
     logger.info("Po balansowaniu: %d wierszy, rozkład klas:\n%s",
                 len(data_balanced), data_balanced[target].value_counts().to_string())
@@ -89,7 +94,8 @@ def split_data(data: pd.DataFrame, parameters: Dict[str, Any]):
         stratify=y_temp,
     )
 
-    logger.info("Train: %d, Val: %d, Test: %d", len(X_train), len(X_val), len(X_test))
+    logger.info("Train: %d, Val: %d, Test: %d",
+                len(X_train), len(X_val), len(X_test))
     return X_train, X_val, X_test, y_train, y_val, y_test
 
 
@@ -138,7 +144,7 @@ def train_model(X_train: pd.DataFrame, y_train: pd.Series, parameters: Dict[str,
     return model_pipeline
 
 
-def evaluate_model(model: Pipeline, X_val: pd.DataFrame, y_val: pd.Series) -> Dict[str, float]:
+def evaluate_model_and_log(model: Pipeline, X_val: pd.DataFrame, y_val: pd.Series) -> Dict[str, float]:
     """Oblicza metryki klasyfikacji na zbiorze walidacyjnym.
 
     Args:
@@ -149,6 +155,7 @@ def evaluate_model(model: Pipeline, X_val: pd.DataFrame, y_val: pd.Series) -> Di
     Returns:
         Słownik z metrykami: accuracy, precision, rmse, mae, r2.
     """
+
     y_pred = model.predict(X_val)
     y_pred_proba = model.predict_proba(X_val)[:, 1]
 

@@ -118,3 +118,4 @@ kedro==0.19.9
 kedro-datasets==7.0.0
 kedro-viz==11.1.0
 sqlalchemy==2.0.49
+wandb
