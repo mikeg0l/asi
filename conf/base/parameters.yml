@@ -6,7 +6,8 @@ split:
   random_state: 42
 
 model:
-  n_estimators: 300
+  n_estimators: 500
+  max_depth: 20
   random_state: 42
   class_weight: "balanced"
   n_jobs: -1

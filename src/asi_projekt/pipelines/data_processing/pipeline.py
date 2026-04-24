@@ -1,6 +1,6 @@
 from kedro.pipeline import Pipeline, node, pipeline
 
-from .nodes import evaluate_model_and_log, preprocess, split_data, train_model
+from .nodes import evaluate_and_log, preprocess, split_data, train_model
 
 
 def create_pipeline(**kwargs) -> Pipeline:
@@ -26,9 +26,9 @@ def create_pipeline(**kwargs) -> Pipeline:
             name="train_model_node",
         ),
         node(
-            func=evaluate_model_and_log,
+            func=evaluate_and_log,
             inputs=["trained_model", "X_val", "y_val", "parameters"],
             outputs="metrics",
-            name="evaluate_model_node",
+            name="evaluate_and_log_node",
         ),
     ])

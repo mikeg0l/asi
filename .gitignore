@@ -18,6 +18,7 @@ AutogluonModels/
 
 # W&B
 wandb/
+artifacts/
 
 # IDE
 .vscode/
