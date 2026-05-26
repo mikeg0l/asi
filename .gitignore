@@ -15,6 +15,7 @@ data/
 *.db
 *.pkl
 AutogluonModels/
+data/06_models/autogluon/
 
 # W&B
 wandb/
