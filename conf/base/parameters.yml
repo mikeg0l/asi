@@ -19,3 +19,6 @@ automl:
   presets: "good_quality"
   time_limit: 300
   eval_metric: "accuracy"
+
+synthetic:
+  n_samples: 1000

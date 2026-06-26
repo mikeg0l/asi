@@ -43,3 +43,11 @@ automl_predictor:
 automl_metrics:
   type: json.JSONDataset
   filepath: data/08_reporting/automl_metrics.json
+
+synthetic_data:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/synthetic_data.csv
+
+synthetic_scores:
+  type: json.JSONDataset
+  filepath: data/08_reporting/synthetic_scores.json
