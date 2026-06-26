@@ -65,8 +65,8 @@ def fit_synthesizer(real_data: pd.DataFrame) -> GaussianCopulaSynthesizer:
 
 
 # --- 4. LAYOUT ---
-st.set_page_config(page_title="ASI — Jakość wody", layout="wide")
-st.title("ASI — Dashboard MLOps (jakość wody)")
+st.set_page_config(page_title="ASI - Jakość wody", layout="wide")
+st.title("ASI - Dashboard MLOps (jakość wody)")
 tab_pred, tab_data, tab_synth = st.tabs(["Predykcja", "Dane", "Dane syntetyczne"])
 
 
@@ -148,7 +148,7 @@ with tab_synth:
         df = load_data()
     except Exception as exc:  # noqa: BLE001
         st.error(
-            f"Brak danych w `{DB_PATH}` — zaseeduj bazę: `python scripts/seed_db.py`.\n\n"
+            f"Brak danych w `{DB_PATH}` - zaseeduj bazę: `python scripts/seed_db.py`.\n\n"
             f"Szczegóły: {exc}"
         )
     else:
